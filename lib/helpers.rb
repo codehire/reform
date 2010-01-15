@@ -5,7 +5,7 @@
     def buttons(options = {}, &block)
       to_return = []
       to_return << %Q{<div class="field field-buttons #{options[:row_class]}">}
-      to_return << %Q{<div class="field-label #{options[:label_class] || 'span-4'}">&nbsp;</div>}
+      to_return << %Q{<div class="field-label #{options[:label_class]}">&nbsp;</div>}
       to_return << %Q{<div class="field-inner">}
       to_return << @template.capture(&block)
       to_return << %Q{<div class="required_description"><span class="required">*</span> Required field</div>} if options.has_key?(:required_description) && options[:required_description] == true
@@ -70,7 +70,7 @@
     end
 
     def row(method, options = {}, &block)
-      label      = options[:label] ||method
+      label      = options[:label] || method
       field_name = "#{@object_name}_#{method.to_s}"
       id         = options[:id] || "field_#{field_name.downcase}"
       style      = options[:hide] ? 'display: none' : ''
@@ -80,7 +80,7 @@
       @in_row    = true
       @template.concat <<-HTML
         <div id="#{id}" class="field field-custom #{options[:row_class]}" style="#{style}">
-          <div class="field-label #{options[:label_class] || 'span-4'}">
+          <div class="field-label #{options[:label_class]}">
             <label for="#{method}">#{required}#{label.to_s}</label>
           </div>
           <div class="field-inner #{options[:field_class]}">
@@ -99,7 +99,7 @@
     end
 
     def inline_help(help, class_name = nil)
-      class_name = class_name || "span-5"
+      class_name = class_name || ""
       %Q{<div class="field-help #{class_name}">#{help}</div>} if help
     end
 
@@ -126,7 +126,18 @@
       id = "label_#{name}_#{value}".downcase.gsub(/[\[\]]/, '_').gsub(/\]$/, '').gsub(/__/, '_')
       @template.content_tag(:label, "#{input} #{text}", :id => id, :class=>"#{class_name} input")
     end
-
+    
+    def humanized_label_for(method, tag_value=nil)
+      if tag_value.nil?
+        if @object && @object.class.respond_to?(:human_attribute_name)
+          @object.class.human_attribute_name(method.to_s)
+        else
+          method.to_s.humanize
+        end
+      else
+        tag_value.to_s.humanize
+      end
+    end
   end
 
 end

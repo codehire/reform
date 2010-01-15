@@ -6,12 +6,12 @@ module Reform
     
     def field_settings(method, options = {}, tag_value = nil)
       field_name = "#{@object_name}_#{method.to_s}"
-      default_label = tag_value.nil? ? "#{method.to_s.gsub(/\_/, " ")}" : "#{tag_value.to_s.gsub(/\_/, " ")}"
+      default_label = humanized_label_for(method, tag_value)
       required = @template.content_tag(:sup, "*") if options[:required]
       label = "#{required}#{options[:label] ? options.delete(:label) : default_label}"
       row_class = options.delete(:row_class) || ''
       row_class << " required" if options.delete(:required)
-      label_class = options.has_key?(:label_class) ? options.delete(:label_class) : 'span-4'
+      label_class = options.has_key?(:label_class) ? options.delete(:label_class) : ''
       [field_name, label, {}.merge(options), row_class, label_class]
     end
     
