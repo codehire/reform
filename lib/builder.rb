@@ -53,11 +53,10 @@ module Reform
       field_name, label, options, row_class, label_class = field_settings(method, options)
       wrapping("select", method, field_name, label, row_class, label_class, super, options)
     end
-    
-    def time_zone_select(method, choices, options = {}, html_options = {})
+
+    def time_zone_select(method, options = {}, html_options = {})
       field_name, label, options, row_class, label_class = field_settings(method, options)
-      select_box = this_check_box = @template.select(@object_name, method, choices, options.merge(:object => @object), html_options)
-      wrapping("time-zone-select", method, field_name, label, select_box, options)    
+      wrapping("time-zone-select", method, field_name, label, row_class, label_class, super, options)    
     end
     
     def password_field(method, options = {})
