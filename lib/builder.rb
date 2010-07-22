@@ -34,6 +34,11 @@ module Reform
       field_name, label, options, row_class, label_class = field_settings(method, options)
       wrapping("date", method, field_name, label, row_class, label_class, super, options)
     end
+
+    def time_select(method, options = {})
+      field_name, label, options, row_class, label_class = field_settings(method, options)
+      wrapping("time", method, field_name, label, row_class, label_class, super, options)
+    end
     
     def radio_button(method, tag_value, options = {})
       field_name, label, options, row_class, label_class = field_settings(method, options)
