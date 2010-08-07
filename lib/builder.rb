@@ -32,7 +32,6 @@ module Reform
 
     def date_select(method, options = {})
       field_name, label, options, row_class, label_class = field_settings(method, options)
-      label_class << " reform_date_select"
       wrapping("date", method, field_name, label, row_class, label_class, super, options)
     end
 
