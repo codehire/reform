@@ -11,7 +11,7 @@
       to_return << %Q{<div class="required_description"><span class="required">*</span> Required field</div>} if options.has_key?(:required_description) && options[:required_description] == true
       to_return << %Q{</div>}
       to_return << %Q{</div>}
-      @template.concat to_return.join('')
+      @template.concat to_return.join('').html_safe
     end    
     
     def wrapping(type, method, field_name, label, row_class, label_class, field, options = {})
@@ -36,7 +36,7 @@
         to_return << %Q{</div>}
         to_return << %Q{</div>}
         to_return << %Q{<script type="text/javascript">$(document).ready(function() { $('##{field_id}').autogrow({ minHeight: $('##{field_id}').height() }); });</script>} if options[:height] == :auto
-        return to_return
+        return to_return.html_safe
       else
         field
       end
@@ -119,7 +119,7 @@
       to_return << help
       to_return << %Q{</div>}
       to_return << %Q{</div>}
-      return to_return.join("")
+      return to_return.join("").html_safe
     end
 
     def boolean_field_wrapper(input, name, value, text, help = nil, class_name = nil)
